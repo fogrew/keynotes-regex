@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Регулярные выражения</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=792, user-scalable=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <link rel="stylesheet" href="shower/themes/ribbon/styles/screen-16x10.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <!-- Theme docs: https://shwr.me/shower/themes/ribbon/ -->
+</head>
+
+<body class="shower list">
+  <header class="caption">
+      <h1>Регулярные выражения</h1>
+      <p>для Epic Skills</p>
+  </header>
+
+  <section class="slide skip">
+    <h2 class="shout">Регулярные выражения</h2>
+  </section>
+
+  <section class="slide">
+    <h2>Создаём регулярку</h2>
+    <p>Регулярка – тип объекта. Её можно создать, вызвав конструктор RegExp, или написав нужный шаблон, окружённый слешами.</p>
+    <p>
+      <code>var re1 = new RegExp(<mark>pattern</mark>, <mark>flags</mark>);</code><br>
+      <code>var re2 = /<mark>pattern</mark>/<mark>flags</mark>;</code>
+    </p>
+    <p class="next"><code>pattern</code> - что искать, <code>flags</code> - как искать. <br>Аргумент <code>flags</code> — не обязательный.</p>
+  </section>
+
+  <section class="slide">
+    <h2>Создаём регулярку</h2>
+    <p>Например</p>
+    <p>
+      <code>var re1 = new RegExp("abc");</code><br>
+      <code>var re2 = /abc/;</code>
+    </p>
+    <p>Оба этих регулярных выражения представляют один шаблон: символ “a”, за которым следует символ “b”, за которым следует символ “c”.</p>
+  </section>
+
+  <section class="slide">
+    <h2>Цифры</h2>
+    <p>
+      <code>var re1 = /[0123456789]/;</code><br>
+      <code>var re2 = /[0-9]/;</code>
+    </p>
+    <p>В квадратных скобках тире между двумя символами используется для задания диапазона символов, где последовательность задаётся кодировкой Unicode. Символы от 0 до 9 находятся там просто подряд (коды с 48 до 57), поэтому [0-9] захватывает их все и совпадает с любой цифрой.</p>
+  </section>
+
+  <section class="slide">
+    <h2>Любое слово на русском</h2>
+    <p>
+      <code>var re1 = new RegExp("^[А-Яа-яЁё]+$");</code><br>
+      <code>var re2 = /^[А-Яа-яЁё]+$/;</code>
+    </p>
+  </section>
+
+  <section class="slide">
+    <h2 class="shout grow">Что может содержать регулярка</h2>
+  </section>
+
+  <section class="slide">
+    <h2>Сокращения групп символов</h2>
+    <p>У нескольких групп символов есть свои встроенные сокращения.</p>
+    <table style="margin-top: -20px;">
+      <tr class="next">
+        <td><mark>\d</mark></td>
+        <td>Любая цифра</td>
+      </tr>
+      <tr class="next">
+        <td><mark>\w</mark></td>
+        <td>Алфавитно-цифровой символ</td>
+      </tr>
+      <tr class="next">
+        <td><mark>\s</mark></td>
+        <td>Пробельный символ (пробел, табуляция, перевод строки, и т.п.)</td>
+      </tr>
+      <tr class="next">
+        <td><mark>\D</mark></td>
+        <td>не цифра</td>
+      </tr>
+      <tr class="next">
+        <td><mark>\W</mark></td>
+        <td>не алфавитно-цифровой символ</td>
+      </tr>
+      <tr class="next">
+        <td><mark>\S</mark></td>
+        <td>не пробельный символ</td>
+      </tr>
+      <tr class="next">
+        <td><mark>.</mark></td>
+        <td>любой символ, кроме перевода строки</td>
+      </tr>
+    </table>
+  </section>
+
+  <!-- Международные символы -->
+
+  <section class="slide">
+    <h2 class="shout grow"><a href="https://regex101.com/" target="_blank">regex101.com</a></h2>
+  </section>
+
+  <section class="slide">
+    <h2>Начало и конец строки</h2>
+    <p>В регулярке мы можем жёстко привязать проверку <br>к началу <code>^</code> или концу <code>$</code> строки.</p>
+    <p class="next"><code>var rePhoneNumber = /^\+7/;</code><br>
+      <code class="next">var reGmail = /gmail.com$/;</code></p>
+    <p class="next">Обратный слэш <code>\</code> экранирует служебные символы регулярок для использования их в виде текста.</p>
+  </section>
+
+  <section class="slide">
+    <h2>Любой из символов</h2>
+    <p>Когда мы в регулярке помещаем набор символов в квадратные скобки, это означает, что эта часть выражения совпадает с любым из символов в скобках.</p>
+    <code>var re = /[0-9]/;</code>
+    <p class="next">Внутри квадратных скобок точка теряет своё особое значение и превращается просто в точку. То же касается и других специальных символов, типа +.</p>
+  </section>
+
+  <section class="slide">
+    <h2>Любые символы кроме группы символов</h2>
+    <p>Инвертировать набор символов – то есть, сказать, что вам надо найти любой символ, кроме тех, что есть в наборе – можно, поставив знак ^ сразу после открывающей квадратной скобки.</p>
+    <code>var re = /[^0-9]/;</code>
+  </section>
+
+  <section class="slide">
+    <h2>Повторение части шаблона</h2>
+    <p>Мы знаем, как найти один символ. А если нам надо найти последовательность из одного или более символов, подходящих под условие?</p>
+    <p class="next">Если поставить после чего-либо в регулярке знак +, это будет означать, что этот элемент может быть повторён более одного раза. /\d+/ означает одну или несколько цифр.</p>
+    <code>/\d+/</code>
+  </section>
+
+  <section class="slide">
+    <h2>Повторение части шаблона</h2>
+    <p>У звёздочки * значение почти такое же, но она разрешает шаблону присутствовать ноль раз. Если после чего-то стоит звёздочка, то оно никогда не препятствует нахождению шаблона в строке – оно просто находится там ноль раз.</p>
+    <code>/\d*/</code>
+  </section>
+
+  <section class="slide">
+    <h2>Необязательная часть шаблона</h2>
+    <p>Знак вопроса делает часть шаблона необязательной, то есть она может встретиться ноль или один раз. Следующая регулярка пропустит и целое и дробное число (отделённое запятой).</p>
+    <code class="next">var reNumber = /\d+(,\d+)?/</code><br>
+    <a href="https://regex101.com/r/b0Q3qn/2" target="_blank" class="next">Тестировать</a>
+  </section>
+
+  <section class="slide">
+    <h2>Заданное количество символов</h2>
+    <p>Чтобы задать точное количество раз, которое шаблон должен встретиться, используются фигурные скобки. <br>
+      <span class="next">{4} после элемента означает, что он должен встретиться в строке 4 раза.</span></p><p class="next">Также можно задать промежуток: {2,4} означает, что элемент должен встретиться не менее 2 и не более 4 раз.</p>
+    <code class="next">var reDateTime = <br>/\d{1,2}-\d{1,2}-\d{4} \d{1,2}:\d{2}/;</code>
+  </section>
+
+  <section class="slide">
+    <h2>Заданное количество символов</h2>
+    <p>Можно использовать промежутки, опуская одно из чисел. <br>{,5} означает, что шаблон может встретиться до пяти раз, а {5,} – от пяти.</p>
+    <code class="next">var reUserName = /[A-Za-z]{6,}/;</code><br>
+    <code class="next">var reSmsCode = /[0-9]{,3}/;</code>
+  </section>
+
+  <section class="slide">
+    <h2>Группировка подвыражений</h2>
+    <p>Чтобы использовать операторы * или + на нескольких элементах сразу, можно использовать круглые скобки. Часть регулярки, заключённая в скобки, считается одним элементом с точки зрения операторов.</p>
+    <code class="next">var reEmail = /^([a-z0-9_.-]+)@([a-z0-9_.-]+)\.([a-z.]{2,6})$/;</code><br>
+    <code class="next">var reDate = /^((0?[1-9]|1[012])[- \/.](0?[1-9]|[12][0-9]|3[01])[- \/.](19|20)?[0-9]{2})*$/;</code>
+  </section>
+
+  <section class="slide">
+    <h2>Захватывающие скобки</h2>
+    <p>Можно найти и запомнить сопоставление с частью подстроки.</p>
+    <p class="next"><code>/(foo)/</code> - находит подстроку «foo» и запоминает её в строке «foo bar». Найденную подстроку можно достать из элементов результирующего массива.</p>
+    <p class="next"><mark>Аккуратнее!</mark> Захват групп ведёт к проседанию производительности. Если вам не нужно повторно ссылаться на захваченную подстроку, лучше использовать скобки без захвата.</p>
+  </section>
+
+  <section class="slide">
+    <h2>Скобки без захвата</h2>
+    <p>Если в захваченную подстроку дописать вначале <code>?:</code>, то она не будет доступна в результирующем массиве.</p>
+    <p class="next"><code>/(?:foo)/</code> - лишь находит подстроку «foo» в строке «foo bar», но не сохраняет.</p>
+  </section>
+
+  <section class="slide">
+    <h2>Шаблоны с выбором</h2>
+    <p>Иногда в регулярке требуется проверить два или более вариантов сочетаний символов.</p>
+    <p class="next">Можно было бы написать три регулярки и проверить их по очереди, но есть способ лучше. Символ <code>|</code> обозначает выбор между шаблонами слева и справа от него. И можно сказать следующее:</p>
+    <p class="next"><code>/(cat|dog|fox)/</code></p>
+  </section>
+
+  <section class="slide">
+    <h2>Флаги</h2>
+    <p>Мы можем указывать, каким образом искать вхождения</p>
+    <table style="margin-top: -20px;">
+      <tr class="next">
+        <td><mark>g</mark></td>
+        <td>глобальное сопоставление</td>
+      </tr>
+      <tr class="next">
+        <td><mark>i</mark></td>
+        <td>игнорирование регистра при сопоставлении</td>
+      </tr>
+      <tr class="next">
+        <td><mark>m</mark></td>
+        <td>cопоставление по нескольким строкам; символы начала и конца (^ и $) начинают работать по нескольким строкам (то есть, происходит сопоставление с началом или концом каждой строки (строки разделяются символами \n или \r), а не только с началом или концом всей вводимой строки)</td>
+      </tr>
+    </table>
+  </section>
+
+  <section class="slide">
+    <h2>Блок-схемы</h2>
+    <p>Чем больше условий - тем сложнее регулярка. В какой-то момент регулярки становятся настолько сложными, что без блок-схемы не разобраться.</p>
+    <p><a href="https://regexper.com/" target="_blank">Построить блок-схему</a></p>
+  </section>
+
+  <section class="slide">
+    <h2 class="shout grow">Методы регулярок</h2>
+  </section>
+
+  <section class="slide">
+    <h2>Проверяем на совпадения: test</h2>
+    <p>У регулярок есть несколько методов. Простейший – test. Если передать ему строку, он вернёт булевское значение, сообщая, содержит ли строка вхождение заданного шаблона.</p>
+    <code>/abc/.test("abcde");<span class="next"> // <script>document.write(/abc/.test("abcde"))</script></span></code><br>
+    <code>/abc/.test("aabcd");<span class="next"> // <script>document.write(/abc/.test("aabcd"))</script></span></code><br>
+    <code>/abc/.test("abxde");<span class="next"> // <script>document.write(/abc/.test("abxde"))</script></span></code><br>
+    <code>var re = /abc/; re.test("abxde");<span class="next"> // <script>document.write(/abc/.test("abxde"))</script></span></code><br>
+  </section>
+
+  <section class="slide">
+    <h2>search</h2>
+    <p>Выяснить, содержит ли строка abc, можно было бы и при помощи indexOf. Регулярки же позволяют составлять более сложные шаблоны.</p>
+    <p>А вот indexOf нельзя использовать с регулярками. Зато метод search как раз ожидает регулярку. Как и indexOf, он возвращает индекс первого вхождения, или -1, если его не случилось.</p>
+    <code>"wor ld".search(/ /);<span class="next"> // <script>document.write("wor ld".search(/ /))</script></span></code><br>
+    <code>"world".search(/ /);<span class="next"> // <script>document.write("world".search(/ /))</script></span></code><br>
+  </section>
+
+  <section class="slide">
+    <h2>match</h2>
+    <p>Метод <code>match</code> работает по-разному, в зависимости от наличия или отсутствия флага g.</p>
+    <p>Без флага <code>g</code> вернется массив, состоящий из этого совпадения, с дополнительными свойствами: <code>index</code> – позиция, на которой оно обнаружено и <code>input</code> – строка, в которой был поиск.</p>
+  </section>
+
+  <section class="slide">
+    <h2>match</h2>
+    <pre>
+      <code>var result = 'строка Строк'.match(/стр/gi);</code>
+      <code>result[0];<span class="next"> // <script>document.write('строка Строк'.match(/стр/i)[0])</script></span></code>
+      <code>result.index<span class="next"> // <script>document.write('строка Строк'.match(/стр/i).index)</script></span></code>
+      <code>result.input<span class="next"> // <script>document.write('строка Строк'.match(/стр/i).input)</script></span></code>
+    </pre>
+  </section>
+
+  <section class="slide">
+    <h2>match</h2>
+    <p>Если часть шаблона обозначена скобками, то она станет отдельным элементом массива.</p>
+    <pre>
+      <code>var result = 'строка Строк'.match(/стр/gi);</code>
+      <code>result[0];<span class="next"> // <script>document.write('строка Строк'.match(/(стр)/i)[0])</script></span></code>
+      <code>result[1];<span class="next"> // <script>document.write('строка Строк'.match(/(стр)/i)[1])</script></span></code>
+      <code>result.index<span class="next"> // <script>document.write('строка Строк'.match(/(стр)/i).index)</script></span></code>
+      <code>result.input<span class="next"> // <script>document.write('строка Строк'.match(/(стр)/i).input)</script></span></code>
+    </pre>
+  </section>
+
+  <section class="slide">
+    <h2>match</h2>
+    <p>C флагом <code>g</code> вернется массив, состоящий только из совпадений, без доп. свойств.</p>
+    <pre>
+      <code>var result = 'строка Строк'.match(/стр/gi);</code>
+      <code>result[0];<span class="next"> // <script>document.write('строка Строк'.match(/стр/gi)[0])</script></span></code>
+      <code>result.index<span class="next"> // <script>document.write('строка Строк'.match(/стр/gi).index)</script></span></code>
+      <code>result.input<span class="next"> // <script>document.write('строка Строк'.match(/стр/gi).input)</script></span></code>
+    </pre>
+  </section>
+
+  <section class="slide">
+    <h2>exec</h2>
+    <p>Eсть ещё метод <code>exec</code>, который вернёт <code>null</code>, если ничего не было найдено, а в противном случае вернёт объект с информацией о совпадении.</p>
+    <code>/100/g.exec("99..100")</code><br>
+    <code>/100/g.exec("100..100")</code>
+  </section>
+
+  <section class="slide">
+    <h2>split</h2>
+    <p>Разбивает строку в массив по разделителю – регулярному выражению.</p>
+    <p class="next"><code>'12-34-56'.split('-');<span class="next"> // <script>document.write('12-34-56'.split('-'))</script></span></code></p>
+    <p class="next"><code>'12-34-56'.split(/-/);<span class="next"> // <script>document.write('12-34-56'.split(/-/))</script></span></code></p>
+  </section>
+
+  <section class="slide">
+    <h2>replace</h2>
+    <p>Есть метод <code>replace</code>, который может заменять часть строки другой строкой. Первый аргумент может быть и регуляркой, в таком случае заменяется первое вхождение регулярки в строке. Когда к регулярке добавляется опция “g” (global, всеобщий), заменяются все вхождения, а не только первое</p>
+    <p>При вызове со строкой замены replace всегда заменяет только первое совпадение. Для замены всех совпадений нужен флаг <code>g</code></p>
+  </section>
+
+  <section class="slide">
+    <h2>replace</h2>
+    <p><code>"Borobudur".replace(/[ou]/, "a")</code></p>
+    <p class="next"><code>"Hopper, Grace\nMcCarthy, John\nRitchie, Dennis".replace(/([\w ]+), ([\w ]+)/g, "$2 $1")</code></p>
+    <p class="next">
+      <code>"the cia and fbi".replace(/\b(fbi|cia)\b/g, function(str) {</code><br>
+      <code>&nbsp;&nbsp;return str.toUpperCase();</code><br>
+      <code>});</code>
+    </p>
+  </section>
+
+  <div class="progress"></div>
+  <script src="shower/shower.min.js"></script>
+</body>
+</html>
